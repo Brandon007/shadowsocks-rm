@@ -119,7 +119,7 @@ class DbTransfer(object):
                 elif row[1] + row[2] >= row[3]:
                     #stop out bandwidth user
                     logging.info('db stop server at port [%s] reason: out bandwidth' % (row[0]))
-                    DbTransfer.send_command('remove: {"server_port":%s}' % row[0])
+                    #DbTransfer.send_command('remove: {"server_port":%s}' % row[0])
                 if server['password'] != row[4] or row[6] is not None and server['method'] != row[6]:
                     #password or method changed
                     logging.info('db stop server at port [%s] reason: password or method changed' % (row[0]))
@@ -132,7 +132,8 @@ class DbTransfer(object):
             else:
                 if config.PRO_NODE == 1 and row[7] != 'VIP':
                     continue
-                if row[5] == 1 and row[1] + row[2] < row[3]:
+                #if row[5] == 1 and row[1] + row[2] < row[3]:
+                if  row[5] == 1:
                     logging.info('db start server at port [%s] pass [%s]' % (row[0], row[4]))
                     if row[6] is None:
                     	row[6] = config.SS_METHOD
